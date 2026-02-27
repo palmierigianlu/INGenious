@@ -7,12 +7,8 @@ import com.ing.ide.main.utils.INGeniousFileChooser;
 import com.ing.ide.main.utils.recentItem.RecentItem;
 import com.ing.ide.settings.AppSettings;
 import com.ing.ide.util.Validator;
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
+
+import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.IOException;
@@ -20,8 +16,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JToggleButton;
 import javax.swing.UIManager;
@@ -41,7 +35,15 @@ public class StartUp extends javax.swing.JDialog {
         super(new JFrame());
         this.sMainFrame = sMainFrame;
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/ui/resources/favicon.png")).getImage());
+        java.awt.Image image = null;
+        java.net.URL iconURL = getClass().getResource("/ui/resources/favicon.png");
+        if (iconURL != null) {
+            image = Toolkit.getDefaultToolkit().getImage(iconURL);
+            // Taskbar support check
+            if (Taskbar.isTaskbarSupported()) {
+                Taskbar.getTaskbar().setIconImage(image);
+            }
+        }
         initFileChooser();
         load();
     }
