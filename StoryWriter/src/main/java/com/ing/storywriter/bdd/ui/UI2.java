@@ -1,9 +1,7 @@
 
 package com.ing.storywriter.bdd.ui;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.List;
@@ -20,9 +18,7 @@ import com.ing.storywriter.bdd.data.Story;
 import com.ing.storywriter.bdd.editor.StyledEditor;
 import com.ing.storywriter.util.Notification.Msg;
 import com.ing.storywriter.util.Validator;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -51,10 +47,17 @@ public final class UI2 extends javax.swing.JFrame {
         this.uic = uic;
         storydata = new DefaultListModel();
         initComponents();
-        Image img = new ImageIcon(getClass().getResource("/favicon.png")).getImage();
-        setIconImage(img);
-        addStory.setIconImage(img);
-        newProj.setIconImage(img);
+        java.awt.Image image = null;
+        java.net.URL iconURL = getClass().getResource("/favicon.png");
+        if (iconURL != null) {
+            image = Toolkit.getDefaultToolkit().getImage(iconURL);
+            // Taskbar support check
+            if (Taskbar.isTaskbarSupported()) {
+                Taskbar.getTaskbar().setIconImage(image);
+            }
+        }
+        addStory.setIconImage(image);
+        newProj.setIconImage(image);
         addPop = new JPopupMenu();
         remPopup = new JPopupMenu();
         textArea = new StyledEditor() {

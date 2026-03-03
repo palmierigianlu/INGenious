@@ -63,6 +63,7 @@
         <mac.version>mac-aarch64</mac.version>
         <setupDir>../Dist/release</setupDir>
         <resourceDir>../Resources</resourceDir>
+        <jetbrains.kotlin>LATEST</jetbrains.kotlin>
 
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>

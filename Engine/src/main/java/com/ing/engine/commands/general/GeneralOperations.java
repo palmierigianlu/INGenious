@@ -8,6 +8,10 @@ import com.ing.engine.support.Status;
 import com.ing.engine.support.methodInf.Action;
 import com.ing.engine.support.methodInf.InputType;
 import com.ing.engine.support.methodInf.ObjectType;
+
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -24,11 +28,22 @@ public class GeneralOperations extends General {
 
     }
 
+    @Action(object = ObjectType.GENERAL, desc = "Execute script [<Data>]", input = InputType.YES)
+    public void execKotlinScript() throws ScriptException {
+        System.out.println("start to exec: "+Data);
+        ScriptEngineManager manager = new ScriptEngineManager();
+        ScriptEngine engine = manager.getEngineByExtension("kts");
+        engine.eval(Data);
+        System.out.println(Data);
+        Report.updateTestLog("print", String.format("printed %s", Data), Status.DONE);
+    }
+
     @Action(object = ObjectType.GENERAL, desc = "print the data [<Data>]", input = InputType.YES)
     public void print() {
         System.out.println(Data);
         Report.updateTestLog("print", String.format("printed %s", Data), Status.DONE);
     }
+
 
     @Action(object = ObjectType.GENERAL, desc = "Wait for [<Data>] milli seconds", input = InputType.YES)
     public void pause() {
